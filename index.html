@@ -56,7 +56,7 @@
 </main>
 
 <footer class="pied">
-  TirsHand · données stockées uniquement sur cet appareil ·
+  TirsHand <span id="version"></span> · données stockées uniquement sur cet appareil ·
   <button id="lien-confid" class="lien">Confidentialité</button>
 </footer>
 
@@ -84,10 +84,12 @@
 
 <div id="toast" class="toast" role="status" hidden></div>
 
+<script src="./version.js"></script>
 <script src="./eps-core.js"></script>
 <script src="./eleve-core.js"></script>
 <script src="./app.js"></script>
 <script>
+document.getElementById('version').textContent = 'v' + APP_VERSION;
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
 }

@@ -1,8 +1,10 @@
 /* TirsHand — service worker : réseau d'abord (délai 2,5 s), copie locale en secours */
-const CACHE = 'tirshand-v1';
+importScripts('./version.js');
+const CACHE = 'tirshand-v' + APP_VERSION; // version définie dans version.js
 const FICHIERS = [
   './',
   './index.html',
+  './version.js',
   './app.js',
   './style.css',
   './eps-core.js',
