@@ -553,8 +553,9 @@ async function videoDemarrer() {
   V.frames = []; V.mode = 'diff';
   V.capt = setInterval(() => {
     const v = V.video; if (!v || !v.videoWidth) return;
+    // On garde les proportions réelles de la caméra (paysage ou portrait) : aucune déformation
     const w = 640, h = Math.round(w * v.videoHeight / v.videoWidth);
-    if (V.off.width !== w) { V.off.width = w; V.off.height = h; const c = $('#v-canvas'); c.width = w; c.height = h; }
+    if (V.off.width !== w || V.off.height !== h) { V.off.width = w; V.off.height = h; }
     V.off.getContext('2d').drawImage(v, 0, 0, w, h);
     const t = performance.now();
     V.off.toBlob(b => { if (b && V.stream) V.frames.push({ t, b }); }, 'image/jpeg', .7);
@@ -580,7 +581,7 @@ function boucle() {
   }
   if (!f || f === V.dernier) return;
   V.occupe = true; V.dernier = f;
-  createImageBitmap(f.b).then(bm => { const c = $('#v-canvas'); c.getContext('2d').drawImage(bm, 0, 0, c.width, c.height); bm.close(); })
+  createImageBitmap(f.b).then(bm => { const c = $('#v-canvas'); if (c.width !== bm.width || c.height !== bm.height) { c.width = bm.width; c.height = bm.height; } c.getContext('2d').drawImage(bm, 0, 0); bm.close(); })
     .catch(() => {}).finally(() => { V.occupe = false; });
 }
 
