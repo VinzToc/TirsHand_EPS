@@ -21,7 +21,7 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(cles => Promise.all(cles.filter(k => k.startsWith('tirshand-') && k !== CACHE).map(k => caches.delete(k))))
+      .then(cles => Promise.all(cles.filter(k => /^tirshand-v/.test(k) && k !== CACHE).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
