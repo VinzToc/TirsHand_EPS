@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a1428">
+<meta name="description" content="TirsHand : carte de tirs et projet tactique en handball (EPS).">
+<title>TirsHand</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="entete">
+  <div class="titre"><span class="emoji" aria-hidden="true">🤾</span> <span>TirsHand</span></div>
+  <div id="bandeau" class="bandeau"></div>
+</header>
+
+<nav class="onglets" role="tablist" aria-label="Écrans">
+  <button class="onglet actif" data-ecran="match" role="tab">🏁<span>Match</span></button>
+  <button class="onglet" data-ecran="bilan" role="tab">🗺️<span>Bilan</span></button>
+  <button class="onglet" data-ecran="video" role="tab">🎥<span>Vidéo</span></button>
+  <button class="onglet" data-ecran="carnet" role="tab">📒<span>Carnet</span></button>
+</nav>
+
+<main>
+  <section id="ecran-match" class="ecran actif" aria-live="polite"></section>
+  <section id="ecran-bilan" class="ecran"></section>
+  <section id="ecran-video" class="ecran">
+    <div class="carte">
+      <h2>🎥 Vidéo différée</h2>
+      <p class="aide">L'écran montre l'action avec quelques secondes de retard : le joueur peut revenir voir son tir. <b>Rien n'est enregistré</b> : les images restent quelques secondes en mémoire puis disparaissent.</p>
+      <div class="ligne-boutons">
+        <button id="v-demarrer" class="btn btn-accent">📷 Démarrer la caméra</button>
+        <button id="v-effacer" class="btn btn-danger">🗑️ Effacer</button>
+      </div>
+      <div class="choix-titre">Retard de l'image</div>
+      <div class="ligne-boutons" id="v-delais">
+        <button class="btn choix" data-d="3">3 s</button>
+        <button class="btn choix sel" data-d="5">5 s</button>
+        <button class="btn choix" data-d="10">10 s</button>
+      </div>
+      <div class="video-zone">
+        <canvas id="v-canvas" width="640" height="360" aria-label="Image différée"></canvas>
+        <div id="v-etat" class="video-etat">Caméra arrêtée</div>
+      </div>
+      <div class="ligne-boutons">
+        <button id="v-ralenti" class="btn" disabled>🐢 Revoir au ralenti</button>
+        <button id="v-vitesse" class="btn" disabled>Vitesse ×0,5</button>
+        <button id="v-retour" class="btn" disabled>▶️ Retour au différé</button>
+      </div>
+    </div>
+  </section>
+  <section id="ecran-carnet" class="ecran"></section>
+</main>
+
+<footer class="pied">
+  TirsHand · données stockées uniquement sur cet appareil ·
+  <button id="lien-confid" class="lien">Confidentialité</button>
+</footer>
+
+<dialog id="confid" class="fenetre">
+  <h2>🔒 Confidentialité</h2>
+  <p><b>Données enregistrées :</b> le nom, le prénom et la classe saisis par l'élève, puis pour chaque tir la date, le match, la zone, le type de tir et le résultat, ainsi que le bilan de l'équipe (score, observations, projet tactique, co-évaluation). <b>Finalité :</b> permettre à l'équipe d'analyser ses tirs et de construire un projet tactique en EPS.</p>
+  <p><b>Stockage :</b> tout reste sur cette tablette (stockage du navigateur). Il n'y a ni serveur, ni compte, ni cookie, ni statistiques de visite. Les données ne quittent l'appareil que si l'élève exporte lui-même son fichier pour le remettre au professeur.</p>
+  <p><b>Vidéo :</b> la caméra sert seulement à l'image différée. Aucune vidéo n'est enregistrée, envoyée ou conservée : les images restent quelques secondes en mémoire et sont effacées quand on quitte l'écran Vidéo.</p>
+  <p><b>Responsabilité :</b> l'appli est utilisée sous la responsabilité du chef d'établissement (responsable de traitement), qui l'inscrit au registre des traitements et assure l'information des familles.</p>
+  <p><b>Hébergement :</b> l'appli est téléchargée depuis GitHub Pages, qui enregistre l'adresse IP des visiteurs dans ses journaux techniques.</p>
+  <p><b>Effacement :</b> le bouton ci-dessous supprime toutes les données de TirsHand sur cet appareil.</p>
+  <div class="ligne-boutons">
+    <button id="btn-effacer-tout" class="btn btn-danger">🗑️ Effacer les données de l'appli</button>
+    <button class="btn" data-fermer>Fermer</button>
+  </div>
+</dialog>
+
+<dialog id="confirmer" class="fenetre petite">
+  <p id="confirmer-texte"></p>
+  <div class="ligne-boutons">
+    <button id="confirmer-oui" class="btn btn-danger">Oui</button>
+    <button id="confirmer-non" class="btn">Non, annuler</button>
+  </div>
+</dialog>
+
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script src="./eps-core.js"></script>
+<script src="./eleve-core.js"></script>
+<script src="./app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+}
+</script>
+</body>
+</html>
