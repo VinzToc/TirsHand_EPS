@@ -1,0 +1,12 @@
+[
+ {
+  "v": "1.0.4",
+  "date": "2026-11-23",
+  "items": [
+   "Cette fenêtre « Nouveautés » s'affiche désormais à chaque mise à jour de l'application.",
+   "Vidéo : image non déformée (proportions de la caméra conservées).",
+   "Hors ligne : le cache de TirsHand Prof n'est plus supprimé.",
+   "En-tête modernisé : titre aux couleurs du logo et nom officiel de l'application."
+  ]
+ }
+]
